@@ -17,6 +17,7 @@ public class ReceiveCall {
         };
 
     public static Route fizzBuzz = ((request, response) -> {
+        System.out.println(request.body());
         System.out.println("test: " + request.queryParams());
 
         String digit = request.queryParams("Digits");

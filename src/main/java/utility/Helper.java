@@ -18,7 +18,7 @@ public class Helper {
             }
             message += "...";
         }
-
+        message += "....Thank you for playing Phone Buzz!";
         Say fizzBuzzMessage = new Say.Builder(message).build();
         return fizzBuzzMessage;
     }

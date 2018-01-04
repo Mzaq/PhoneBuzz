@@ -17,10 +17,16 @@ import java.net.URI;
 public class SendCall {
 
     public static Route handlePhone = ((request, response) -> {
-        String phoneNumber = "+1" + request.queryParams("phonenumber");
+        String inputNumber = request.queryParams("phoneNumber");
+
+        if (inputNumber.length() != 10 || !inputNumber.matches("[0-9]+") ){
+            return "Phone number not valid. Please go back and try again.";
+        }
+
+        String phoneNumber = "+1" + inputNumber;
         makeCall(phoneNumber);
 
-        return "test";
+        return "Success";
     });
 
     private static void makeCall(String toNumber) throws URISyntaxException{
