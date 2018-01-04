@@ -19,8 +19,8 @@ public class ReceiveCall {
         System.out.println(response.body());
         response.type("application/xml");
         response.body(twiml.toXml());
-        return response;
-        //return twiml.toXml();
+        //return response;
+        return twiml.toXml();
         };
 
     public static Route fizzBuzz = ((request, response) -> {
