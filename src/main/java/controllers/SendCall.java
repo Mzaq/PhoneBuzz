@@ -17,17 +17,21 @@ import java.net.URI;
 public class SendCall {
 
     public static Route handlePhone = ((request, response) -> {
-        String phoneNumber = "1" + request.queryParams("phonenumber");
+        String phoneNumber = "+1" + request.queryParams("phonenumber");
         makeCall(phoneNumber);
-        //Say message = Helper.fizzBuzz(number);
-        //VoiceResponse twiml = new VoiceResponse.Builder().say(message).build();
-        //return twiml.toXml();
-        return null;
+
+        return "test";
     });
 
     private static void makeCall(String toNumber) throws URISyntaxException{
         Twilio.init(Config.ACCOUNT_SID, Config.AUTH_TOKEN);
 
+        Call call = Call.creator(
+                new PhoneNumber(toNumber),
+                new PhoneNumber(Config.TWILIO_NUMBER),
+                new URI("/receive-call"))
+                .create();
 
+        System.out.println("SID: " + call.getSid());
     }
 }
