@@ -1,9 +1,6 @@
 package controllers;
 
-import utility.Config;
-
-import com.twilio.twiml.VoiceResponse;
-import com.twilio.twiml.voice.Say;
+import util.Config;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Call;
@@ -13,6 +10,7 @@ import spark.Route;
 
 import java.net.URISyntaxException;
 import java.net.URI;
+import java.util.concurrent.TimeUnit;
 
 public class SendCall {
 
@@ -23,6 +21,7 @@ public class SendCall {
             return "Phone number not valid. Please go back and try again.";
         }
 
+        TimeUnit.SECONDS.sleep(1);
         String phoneNumber = "+1" + inputNumber;
         makeCall(phoneNumber);
 

@@ -1,4 +1,4 @@
-package utility;
+package util;
 
 public class Config {
     //Set as environment variables
