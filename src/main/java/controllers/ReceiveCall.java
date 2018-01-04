@@ -9,9 +9,6 @@ import utility.Helper;
 public class ReceiveCall {
 
     public static Route call = (request, response) -> {
-        System.out.println(request.attributes());
-        System.out.println(request.params());
-
         Say sayMessage = new Say.Builder("Hello! Please enter a number for Fizz Buzz. Enter # when finished.").build();
         Gather input = new Gather.Builder().timeout(3).say(sayMessage).action("/handle-number").build();
         VoiceResponse twiml = new VoiceResponse.Builder().gather(input).build();

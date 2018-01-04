@@ -29,7 +29,7 @@ public class SendCall {
         Call call = Call.creator(
                 new PhoneNumber(toNumber),
                 new PhoneNumber(Config.TWILIO_NUMBER),
-                new URI("/receive-call"))
+                new URI("response.xml"))
                 .create();
 
         System.out.println("SID: " + call.getSid());
