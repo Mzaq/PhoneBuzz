@@ -28,7 +28,7 @@ public class ReceiveCall {
         System.out.println(request.params());
         System.out.println("test: " + request.queryParams());
 
-        String digit = request.params("Digits");
+        String digit = request.queryParams("Digits");
         System.out.println(digit);
 
         int number = Integer.parseInt(digit);
