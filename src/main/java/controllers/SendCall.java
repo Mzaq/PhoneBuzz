@@ -16,19 +16,31 @@ public class SendCall {
 
     public static Route handlePhone = ((request, response) -> {
         String inputNumber = request.queryParams("phoneNumber");
+        String inputDelay = request.queryParams("delay");
+        int delay = 0;
 
         if (inputNumber.length() != 10 || !inputNumber.matches("[0-9]+") ){
             return "Phone number not valid. Please go back and try again.";
         }
 
-        TimeUnit.SECONDS.sleep(1);
+        try {
+            delay = Integer.parseInt(inputDelay);
+        } catch (NumberFormatException e) {
+            delay = 0;
+        }
+
+        if (delay < 0){
+            delay = 0;
+        }
+
+        TimeUnit.SECONDS.sleep(delay);
         String phoneNumber = "+1" + inputNumber;
         makeCall(phoneNumber);
 
         return "Success";
     });
 
-    private static void makeCall(String toNumber) throws URISyntaxException{
+    private static void makeCall(String toNumber) throws URISyntaxException {
         Twilio.init(Config.ACCOUNT_SID, Config.AUTH_TOKEN);
 
         Call call = Call.creator(
