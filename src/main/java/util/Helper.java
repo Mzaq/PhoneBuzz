@@ -1,5 +1,8 @@
 package util;
 
+import com.twilio.Twilio;
+import com.twilio.base.ResourceSet;
+import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.twiml.voice.Say;
 
 public class Helper {
@@ -21,5 +24,18 @@ public class Helper {
         message += "....Thank you for playing Phone Buzz!";
         Say fizzBuzzMessage = new Say.Builder(message).build();
         return fizzBuzzMessage;
+    }
+
+    public static ResourceSet<Call> retrieveCallLog(){
+        Twilio.init(Config.ACCOUNT_SID, Config.AUTH_TOKEN);
+
+        ResourceSet<Call> calls = Call.reader().read();
+
+        for (Call call : calls) {
+            System.out.println(call.toString());
+        }
+
+        return calls;
+
     }
 }

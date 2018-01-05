@@ -20,13 +20,13 @@ public class SendCall {
         int delay = 0;
 
         if (inputNumber.length() != 10 || !inputNumber.matches("[0-9]+") ){
-            return "Phone number not valid. Please go back and try again.";
+            return inputNumber + " is not valid. Please go back and try again.";
         }
 
         try {
             delay = Integer.parseInt(inputDelay);
         } catch (NumberFormatException e) {
-            delay = 0;
+            e.printStackTrace();
         }
 
         if (delay < 0){
