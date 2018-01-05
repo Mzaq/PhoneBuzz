@@ -17,7 +17,7 @@ public class App {
         post("/receive-call", ReceiveCall.call);
         get("/receive-call", ReceiveCall.call);
 
-        post("/handle-number", ReceiveCall.fizzBuzz);
+        post("/handle-number:Digits", ReceiveCall.fizzBuzz);
 
         //Call from web application
         get("/handle-phone", SendCall.handlePhone);
