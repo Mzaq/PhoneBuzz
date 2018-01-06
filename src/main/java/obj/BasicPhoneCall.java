@@ -13,6 +13,10 @@ public class BasicPhoneCall {
         this.phoneNumber = phoneNumber;
     }
 
+    public BasicPhoneCall(){
+        this("", "", "" , "");
+    }
+
     //Getters and Setters of instance variables
     public String getTime() {
         return time;
