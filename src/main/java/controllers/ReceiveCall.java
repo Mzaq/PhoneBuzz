@@ -22,13 +22,21 @@ public class ReceiveCall {
         String toNumber = request.queryParams("To");
         String sid = request.queryParams("CallSid");
         System.out.println("To: " + toNumber + " | Sid: " + sid);
-        int number = Integer.parseInt(digit);
-        Say message = Helper.fizzBuzz(number);
-        VoiceResponse twiml = new VoiceResponse.Builder().say(message).build();
+        VoiceResponse twiml;
 
-        if (!toNumber.equals(Config.TWILIO_NUMBER)){
-            System.out.println("Here: after fizz buzz");
-            Helper.addCallToLog(sid, digit);
+        try {
+            int number = Integer.parseInt(digit);
+            Say message = Helper.fizzBuzz(number);
+            twiml = new VoiceResponse.Builder().say(message).build();
+            if (!toNumber.equals(Config.TWILIO_NUMBER)){
+                System.out.println("Here: after fizz buzz");
+                Helper.addCallToLog(sid, digit);
+            }
+        } catch (NumberFormatException e) {
+            twiml = new VoiceResponse.Builder().
+                    say(new Say.Builder("Sorry that is not a valid input.").build()).
+                    build();
+            e.printStackTrace();
         }
 
         return twiml.toXml();
