@@ -42,6 +42,26 @@ public class SendCall {
         return "Success";
     });
 
+    public static Route handleReplay = ((request, response) -> {
+        String oldSid = request.queryParams("sid");
+        System.out.println(oldSid);
+        String to = Helper.getPhoneCall(oldSid).getPhoneNumber();
+        String delay = Helper.getPhoneCall(oldSid).getDelay();
+        String count = Helper.getPhoneCall(oldSid).getCount();
+
+        TimeUnit.SECONDS.sleep(Integer.parseInt(delay));
+
+        Call call = Call.creator(
+                new PhoneNumber(to),
+                new PhoneNumber(Config.TWILIO_NUMBER),
+                new URI(Config.RECEIVE_REPLAY_URL))
+                .create();
+
+        System.out.println("Here: Route handleReplay");
+        Helper.mapCall(count, delay, to, call.getSid());
+        return "Call to " + to + " with " + delay + " second delay and counting up to " + count + " was successful.";
+    });
+
     private static void makeCall(String toNumber, int delay) throws URISyntaxException, IOException {
         Twilio.init(Config.ACCOUNT_SID, Config.AUTH_TOKEN);
 
@@ -52,6 +72,6 @@ public class SendCall {
                 .create();
 
         System.out.println("Here: after call creator");
-        Helper.mapCall(delay, toNumber, call.getSid());
+        Helper.mapCall(null, Integer.toString(delay), toNumber, call.getSid());
     }
 }

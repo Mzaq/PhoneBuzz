@@ -17,7 +17,7 @@ public class ReceiveCall {
         return twiml.toXml();
         };
 
-    public static Route fizzBuzz = ((request, response) -> {
+    public static Route fizzBuzz = (request, response) -> {
         String digit = request.queryParams("Digits");
         String toNumber = request.queryParams("To");
         String sid = request.queryParams("CallSid");
@@ -28,9 +28,19 @@ public class ReceiveCall {
 
         if (!toNumber.equals(Config.TWILIO_NUMBER)){
             System.out.println("Here: after fizz buzz");
-            Helper.addCallToLog(sid, number);
+            Helper.addCallToLog(sid, digit);
         }
 
+        return twiml.toXml();
+    };
+
+    public static Route createReplay = ((request, response) -> {
+        String sid = request.queryParams("CallSid");
+        String digit = Helper.getPhoneCall(sid).getCount();
+        int number = Integer.parseInt(digit);
+        Say message = Helper.fizzBuzz(number);
+        VoiceResponse twiml = new VoiceResponse.Builder().say(message).build();
+        Helper.addCallToLog(sid, null);
         return twiml.toXml();
     });
 }

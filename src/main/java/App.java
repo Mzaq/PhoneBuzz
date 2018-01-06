@@ -17,9 +17,14 @@ public class App {
         post("/receive-call", ReceiveCall.call);
         get("/receive-call", ReceiveCall.call);
 
+        //Handle fizz buzz number
         post("/handle-number", ReceiveCall.fizzBuzz);
 
         //Call from web application
         get("/handle-phone", SendCall.handlePhone);
+
+        //Replay call
+        get("/handle-replay", SendCall.handleReplay);
+        get("/create-replay", ReceiveCall.createReplay);
     }
 }

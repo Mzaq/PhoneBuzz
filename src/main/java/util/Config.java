@@ -10,4 +10,5 @@ public class Config {
 
     //URL of twiml for calls
     public static final String RECEIVE_CALL_URL = "http://138.197.26.93:4567/receive-call";
+    public static final String RECEIVE_REPLAY_URL = "http://138.197.26.93:4567/create-call";
 }

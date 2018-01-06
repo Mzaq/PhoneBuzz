@@ -1,8 +1,5 @@
 package util;
 
-import com.twilio.Twilio;
-import com.twilio.base.ResourceSet;
-import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.twiml.voice.Say;
 import obj.BasicPhoneCall;
 
@@ -41,30 +38,47 @@ public class Helper {
         while (fileScanner.hasNextLine()){
             String nextCall = fileScanner.nextLine();
             List<String> callInfo = Arrays.asList(nextCall.split(","));
-            BasicPhoneCall phoneCall = new BasicPhoneCall(callInfo.get(0), callInfo.get(1), callInfo.get(2), callInfo.get(3));
+            BasicPhoneCall phoneCall = new BasicPhoneCall(
+                    callInfo.get(0),
+                    callInfo.get(1),
+                    callInfo.get(2),
+                    callInfo.get(3),
+                    callInfo.get(4));
             phoneCalls.add(phoneCall);
+            mapCall(phoneCall);
         }
         Collections.reverse(phoneCalls);
         return phoneCalls;
     }
 
-    public static void mapCall(int delay, String phoneNumber, String sid){
+    public static void mapCall(String count, String delay, String phoneNumber, String sid){
         BasicPhoneCall phoneCall = new BasicPhoneCall(
                 getFormattedCurrentDateAndTime(),
-                null,
-                Integer.toString(delay),
-                phoneNumber);
+                count,
+                delay,
+                phoneNumber,
+                sid);
 
         loggedCalls.put(sid, phoneCall);
     }
 
-    public static void addCallToLog(String sid, int digit) throws IOException {
+    public static void mapCall(BasicPhoneCall phoneCall){
+        loggedCalls.put(phoneCall.getSid(), phoneCall);
+    }
+
+    public static void addCallToLog(String sid, String digit) throws IOException {
         BasicPhoneCall phoneCall = loggedCalls.get(sid);
+
+        if (digit == null){
+            digit = phoneCall.getCount();
+        }
+
         StringBuilder newLine = new StringBuilder();
         newLine.append(phoneCall.getTime()).append(",").
                 append(digit).append(",").
                 append(phoneCall.getDelay()).append(",").
-                append(phoneCall.getPhoneNumber());
+                append(phoneCall.getPhoneNumber()).append(",").
+                append(sid).append("\n");
 
         Writer output = new BufferedWriter(new FileWriter(logFilePath, true));
         output.append(newLine);
@@ -74,5 +88,9 @@ public class Helper {
     private static String getFormattedCurrentDateAndTime(){
         LocalDateTime now = LocalDateTime.now();
         return DateTimeFormatter.ISO_INSTANT.format(now.toInstant(ZoneOffset.UTC));
+    }
+
+    public static BasicPhoneCall getPhoneCall(String sid){
+        return loggedCalls.get(sid);
     }
 }
