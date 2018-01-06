@@ -21,7 +21,6 @@ public class ReceiveCall {
         String digit = request.queryParams("Digits");
         String toNumber = request.queryParams("To");
         String sid = request.queryParams("CallSid");
-        System.out.println("To: " + toNumber + " | Sid: " + sid);
         VoiceResponse twiml;
 
         try {
@@ -29,7 +28,6 @@ public class ReceiveCall {
             Say message = Helper.fizzBuzz(number);
             twiml = new VoiceResponse.Builder().say(message).build();
             if (!toNumber.equals(Config.TWILIO_NUMBER)){
-                System.out.println("Here: after fizz buzz");
                 Helper.addCallToLog(sid, digit);
             }
         } catch (NumberFormatException e) {
@@ -45,7 +43,6 @@ public class ReceiveCall {
     public static Route createReplay = ((request, response) -> {
         String sid = request.queryParams("CallSid");
         String digit = Helper.getPhoneCall(sid).getCount();
-        System.out.println("Here: at createReplay | SID: + " + sid + " | " + digit);
         int number = Integer.parseInt(digit);
         Say message = Helper.fizzBuzz(number);
         VoiceResponse twiml = new VoiceResponse.Builder().say(message).build();

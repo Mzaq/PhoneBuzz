@@ -110,6 +110,7 @@ public class Helper {
         return dateAndTime.toString();
     }
 
+    //Get BasicPhoneCall by sid
     public static BasicPhoneCall getPhoneCall(String sid){
         return loggedCalls.get(sid);
     }

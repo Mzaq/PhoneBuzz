@@ -44,7 +44,6 @@ public class SendCall {
 
     public static Route handleReplay = ((request, response) -> {
         String oldSid = request.queryParams("sid");
-        System.out.println(oldSid);
         String to = Helper.getPhoneCall(oldSid).getPhoneNumber();
         String delay = Helper.getPhoneCall(oldSid).getDelay();
         String count = Helper.getPhoneCall(oldSid).getCount();
@@ -57,7 +56,6 @@ public class SendCall {
                 new URI(Config.RECEIVE_REPLAY_URL))
                 .create();
 
-        System.out.println("Here: Route handleReplay");
         Helper.mapCall(count, delay, to, call.getSid());
         return "Replay call to " + to + " with " + delay + " second delay and counting up to " + count + " was successful.";
     });
@@ -69,7 +67,6 @@ public class SendCall {
                 new URI(Config.RECEIVE_CALL_URL))
                 .create();
 
-        System.out.println("Here: after call creator");
         Helper.mapCall(null, Integer.toString(delay), toNumber, call.getSid());
     }
 }
