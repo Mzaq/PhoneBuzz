@@ -1,5 +1,6 @@
 package util;
 
+import com.twilio.security.RequestValidator;
 import com.twilio.twiml.voice.Say;
 import obj.BasicPhoneCall;
 
@@ -111,5 +112,32 @@ public class Helper {
 
     public static BasicPhoneCall getPhoneCall(String sid){
         return loggedCalls.get(sid);
+    }
+
+    //NOTE: is not working correctly
+    public static boolean validateRequest(String sid, String caller, String digits, String from, String to) {
+        // Initialize the validator
+        RequestValidator validator = new RequestValidator(Config.AUTH_TOKEN);
+
+        // The Twilio request URL
+        String url = Config.RECEIVE_CALL_URL;
+
+        // The post variables in Twilio's request
+        Map<String, String> params = new HashMap<>();
+        params.put("CallSid", sid);
+        params.put("Caller", caller);
+        params.put("Digits", digits);
+        params.put("From", from);
+        params.put("To", to);
+
+        // The X-Twilio-Signature header attached to the request
+        String twilioSignature = Config.RECEIVE_CALL_URL +
+                "CallSid" + sid +
+                "Caller" + caller +
+                "Digits" + digits +
+                "From" + from +
+                "To" + to;
+
+        return validator.validate(url, params, twilioSignature);
     }
 }
