@@ -25,6 +25,6 @@ public class App {
 
         //Replay call
         get("/handle-replay", SendCall.handleReplay);
-        get("/create-replay", ReceiveCall.createReplay);
+        post("/create-replay", ReceiveCall.createReplay);
     }
 }
