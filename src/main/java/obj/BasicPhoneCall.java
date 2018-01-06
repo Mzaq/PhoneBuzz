@@ -5,16 +5,18 @@ public class BasicPhoneCall {
     private String count;
     private String delay;
     private String phoneNumber;
+    private String sid;
 
-    public BasicPhoneCall(String time, String count, String delay, String phoneNumber){
+    public BasicPhoneCall(String time, String count, String delay, String phoneNumber, String sid){
         this.time =  time;
         this.count = count;
         this.delay = delay;
         this.phoneNumber = phoneNumber;
+        this.sid = sid;
     }
 
     public BasicPhoneCall(){
-        this("", "", "" , "");
+        this("", "", "" , "", "");
     }
 
     //Getters and Setters of instance variables
@@ -48,5 +50,13 @@ public class BasicPhoneCall {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
     }
 }

@@ -15,11 +15,11 @@
 	  <form action="/handle-phone">
 		  Enter number:
 		  <br>
-		  <input type="text" name="phoneNumber" value="">
+		  <input type="text" name="phoneNumber" value=""/>
 		  <br><br>
           Enter a delay (in seconds):
           <br>
-		  <input type="text" name="delay" value="0">
+		  <input type="text" name="delay" value="0"/>
           <br><br>
 		  <input type="submit" value="Submit">
 	  </form>
@@ -31,6 +31,7 @@
       <hr>
 
       <p> Recent calls: </p>
+	  (may have to refresh page to see updated log after making a call)
 
 	  <div style="height:250px;overflow:auto;">
       <table>
@@ -50,10 +51,19 @@
           <td>$call.getCount()</td>
           <td>$call.getDelay()</td>
           <td>$call.getTime()</td>
-          <td>REPLAY</td>
+          <td>		
+			<form action="/handle-replay">
+				<!-- your table -->
+				<input type="hidden" name="sid" value="$call.getSid()"/>
+				<button type="submit">REPLAY</button>
+			</form>
+		  </td>
         </tr>
 		#set( $number = $number + 1 )
 		#end
-		</div>	  
+	   </div>
+	   
+
+		
   </body>
 </html>
