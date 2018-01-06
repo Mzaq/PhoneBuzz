@@ -7,61 +7,68 @@
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.png' />
   </head>
   <body>
-      <h2>Hello, welcome to PhoneBuzz!</h2>
+  <div id="container">
+	  <div id="wrapper">
+		  <h2>Hello, welcome to <span style="color: #6ead3a">PhoneBuzz!</span></h2>
+		  <h5>By Harish Veeramani</h5>
 
-      <hr>
+		  <hr>
 
-      <p>To have PhoneBuzz call you, enter a U.S. phone number (e.g., 4151234567). Number formatting and extension ("+1") are not needed.</p>
-	  <form action="/handle-phone">
-		  Enter number:
-		  <br>
-		  <input type="text" name="phoneNumber" value=""/>
-		  <br><br>
-          Enter a delay (in seconds):
-          <br>
-		  <input type="text" name="delay" value="0"/>
-          <br><br>
-		  <input type="submit" value="Submit">
-	  </form>
+		  <h4>To have PhoneBuzz call you, enter a U.S. phone number (e.g., 4151234567). Number formatting and extension ("+1") are not needed.</h4>
+		  <div id="form">
+			  <form action="/handle-phone">
+				  Enter number:
+				  <br>
+				  <input type="text" name="phoneNumber" value=""/>
+				  <br><br>
+				  Enter a delay (in seconds):
+				  <br>
+				  <input type="text" name="delay" value="0"/>
+				  <br><br>
+				  <input type="submit" value="Submit" color="black">
+			  </form>
+			</div>
 
-      <hr>
+		  <hr>
 
-      <p>Alternatively, directly <a href="tel:$twilioNumber">call PhoneBuzz</a></p>
+		  <h4>Alternatively, directly <a href="tel:$twilioNumber"><u>call PhoneBuzz</u></a></h4>
 
-      <hr>
+		  <hr>
 
-      <p> Recent calls: </p>
-	  (may have to refresh page to see updated log after making a call)
+		  <h4> Recent calls: </h4>
+		  (may have to refresh page to see updated log after making a call)
 
-	  <div style="height:250px;overflow:auto;">
-      <table>
-        <tr>
-		  <th>#</th>
-          <th>Phone Number</th>
-          <th>Count</th>
-          <th>Delay</th>
-          <th>Time</th>
-          <th>Replay</th>
-        </tr>
-		#set( $number = 1 )
-		#foreach ($call in $phoneCalls)
-        <tr>
-		  <td>$number</td>
-          <td>$call.getPhoneNumber()</td>
-          <td>$call.getCount()</td>
-          <td>$call.getDelay()</td>
-          <td>$call.getTime()</td>
-          <td>		
-			<form action="/handle-replay">
-				<!-- your table -->
-				<input type="hidden" name="sid" value="$call.getSid()"/>
-				<button type="submit">REPLAY</button>
-			</form>
-		  </td>
-        </tr>
-		#set( $number = $number + 1 )
-		#end
+		  <div style="height:250px;overflow:auto;">
+		  <table>
+			<tr>
+			  <th>#</th>
+			  <th>Phone Number</th>
+			  <th>Count</th>
+			  <th>Delay</th>
+			  <th>Date/Time</th>
+			  <th>Replay</th>
+			</tr>
+			#set( $number = 1 )
+			#foreach ($call in $phoneCalls)
+			<tr>
+			  <td>$number</td>
+			  <td>$call.getPhoneNumber()</td>
+			  <td>$call.getCount()</td>
+			  <td>$call.getDelay()</td>
+			  <td>$call.getTime()</td>
+			  <td>		
+				<form action="/handle-replay">
+					<!-- your table -->
+					<input type="hidden" name="sid" value="$call.getSid()"/>
+					<button type="submit">REPLAY</button>
+				</form>
+			  </td>
+			</tr>
+			#set( $number = $number + 1 )
+			#end
+		   </div>
 	   </div>
+	</div>
 	   
 
 		
