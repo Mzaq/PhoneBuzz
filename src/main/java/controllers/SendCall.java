@@ -1,6 +1,7 @@
 package controllers;
 
 import util.Config;
+import util.Helper;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Call;
@@ -8,6 +9,7 @@ import com.twilio.type.PhoneNumber;
 
 import spark.Route;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
@@ -35,12 +37,12 @@ public class SendCall {
 
         TimeUnit.SECONDS.sleep(delay);
         String phoneNumber = "+1" + inputNumber;
-        makeCall(phoneNumber);
+        makeCall(phoneNumber, delay);
 
         return "Success";
     });
 
-    private static void makeCall(String toNumber) throws URISyntaxException {
+    private static void makeCall(String toNumber, int delay) throws URISyntaxException, IOException {
         Twilio.init(Config.ACCOUNT_SID, Config.AUTH_TOKEN);
 
         Call call = Call.creator(
@@ -49,6 +51,7 @@ public class SendCall {
                 new URI(Config.RECEIVE_CALL_URL))
                 .create();
 
-        System.out.println("SID: " + call.getSid());
+        System.out.println("Here: after call creator");
+        Helper.mapCall(delay, toNumber, call.getSid());
     }
 }

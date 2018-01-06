@@ -17,7 +17,7 @@ public class Website {
     public static TemplateViewRoute init = ((request, response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("twilioNumber", Config.TWILIO_NUMBER);
-        model.put("phoneCalls", Helper.packageLog());
+        model.put("phoneCalls", Helper.parseLog());
 
         return new ModelAndView(model, "templates/index.vtl");
     });

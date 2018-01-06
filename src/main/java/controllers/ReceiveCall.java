@@ -4,6 +4,7 @@ import com.twilio.twiml.voice.Gather;
 import com.twilio.twiml.voice.Say;
 import com.twilio.twiml.*;
 import spark.Route;
+import util.Config;
 import util.Helper;
 
 public class ReceiveCall {
@@ -17,16 +18,19 @@ public class ReceiveCall {
         };
 
     public static Route fizzBuzz = ((request, response) -> {
-        //System.out.println(request.body());
-        System.out.println("test: " + request.queryParams());
-
         String digit = request.queryParams("Digits");
-        System.out.println(digit);
-
+        String toNumber = request.queryParams("To");
+        String sid = request.queryParams("CallSid");
+        System.out.println("To: " + toNumber + " | Sid: " + sid);
         int number = Integer.parseInt(digit);
-
         Say message = Helper.fizzBuzz(number);
         VoiceResponse twiml = new VoiceResponse.Builder().say(message).build();
+
+        if (!toNumber.equals(Config.TWILIO_NUMBER)){
+            System.out.println("Here: after fizz buzz");
+            Helper.addCallToLog(sid, number);
+        }
+
         return twiml.toXml();
     });
 }

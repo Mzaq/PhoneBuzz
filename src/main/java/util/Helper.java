@@ -6,46 +6,38 @@ import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.twiml.voice.Say;
 import obj.BasicPhoneCall;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Helper {
+    private static Map<String, BasicPhoneCall> loggedCalls = new HashMap<>();
+    private static final String logFilePath = "src/main/resources/call_log.dat";
+
     public static Say fizzBuzz(int number){
-        String message = "";
+        StringBuilder message = new StringBuilder();
 
         for (int i = 1; i <= number; i++){
             if (i % 3 == 0 && i % 5 == 0) {
-                message += "Fizz Buzz";
+                message.append("Fizz Buzz");
             } else if (i % 3 == 0) {
-                message += "Fizz";
+                message.append("Fizz");
             } else if (i % 5 == 0) {
-                message += "Buzz";
+                message.append("Buzz");
             } else {
-                message += Integer.toString(i);
+                message.append(Integer.toString(i));
             }
-            message += "...";
+            message.append("...");
         }
-        message += "....Thank you for playing Phone Buzz!";
-        Say fizzBuzzMessage = new Say.Builder(message).build();
-        return fizzBuzzMessage;
+        message.append("....Thank you for playing Phone Buzz!");
+        return new Say.Builder(message.toString()).build();
     }
 
-    public static ResourceSet<Call> retrieveCallLog(){
-        Twilio.init(Config.ACCOUNT_SID, Config.AUTH_TOKEN);
-
-        ResourceSet<Call> calls = Call.reader().read();
-
-        for (Call call : calls) {
-            System.out.println(call.toString());
-        }
-
-        return calls;
-    }
-
-    public static List<BasicPhoneCall> packageLog() throws FileNotFoundException {
+    public static List<BasicPhoneCall> parseLog() throws FileNotFoundException {
         List<BasicPhoneCall> phoneCalls = new ArrayList<>();
-        Scanner fileScanner = new Scanner(new File("src/main/resources/call_log.dat"));
+        Scanner fileScanner = new Scanner(new File(logFilePath));
         while (fileScanner.hasNextLine()){
             String nextCall = fileScanner.nextLine();
             List<String> callInfo = Arrays.asList(nextCall.split(","));
@@ -54,5 +46,33 @@ public class Helper {
         }
         Collections.reverse(phoneCalls);
         return phoneCalls;
+    }
+
+    public static void mapCall(int delay, String phoneNumber, String sid){
+        BasicPhoneCall phoneCall = new BasicPhoneCall(
+                getFormattedCurrentDateAndTime(),
+                null,
+                Integer.toString(delay),
+                phoneNumber);
+
+        loggedCalls.put(sid, phoneCall);
+    }
+
+    public static void addCallToLog(String sid, int digit) throws IOException {
+        BasicPhoneCall phoneCall = loggedCalls.get(sid);
+        StringBuilder newLine = new StringBuilder();
+        newLine.append(phoneCall.getTime()).append(",").
+                append(digit).append(",").
+                append(phoneCall.getDelay()).append(",").
+                append(phoneCall.getPhoneNumber());
+
+        Writer output = new BufferedWriter(new FileWriter(logFilePath, true));
+        output.append(newLine);
+        output.close();
+    }
+
+    private static String getFormattedCurrentDateAndTime(){
+        LocalDateTime now = LocalDateTime.now();
+        return DateTimeFormatter.ISO_INSTANT.format(now.toInstant(ZoneOffset.UTC));
     }
 }
