@@ -6,7 +6,7 @@ public class Config {
     public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
 
     //Twilio number
-    public static final String TWILIO_NUMBER = "16082344458";
+    public static final String TWILIO_NUMBER = "+16082344458";
 
     //URL of twiml for calls
     public static final String RECEIVE_CALL_URL = "http://138.197.26.93:4567/receive-call";
