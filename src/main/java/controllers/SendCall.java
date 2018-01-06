@@ -39,7 +39,7 @@ public class SendCall {
         String phoneNumber = "+1" + inputNumber;
         makeCall(phoneNumber, delay);
 
-        return "Success";
+        return "Call to " + phoneNumber + " with " + delay + " second delay was successful.";
     });
 
     public static Route handleReplay = ((request, response) -> {
@@ -59,7 +59,7 @@ public class SendCall {
 
         System.out.println("Here: Route handleReplay");
         Helper.mapCall(count, delay, to, call.getSid());
-        return "Call to " + to + " with " + delay + " second delay and counting up to " + count + " was successful.";
+        return "Replay call to " + to + " with " + delay + " second delay and counting up to " + count + " was successful.";
     });
 
     private static void makeCall(String toNumber, int delay) throws URISyntaxException, IOException {
