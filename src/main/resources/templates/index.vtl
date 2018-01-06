@@ -3,6 +3,7 @@
   <head>
     <title>PhoneBuzz</title>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' type="text/css" href='/index.css'>
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.png' />
   </head>
   <body>
@@ -28,5 +29,31 @@
       <p>Alternatively, directly <a href="tel:$twilioNumber">call PhoneBuzz</a></p>
 
       <hr>
+
+      <p> Recent calls: </p>
+
+	  <div style="height:250px;overflow:auto;">
+      <table>
+        <tr>
+		  <th>#</th>
+          <th>Phone Number</th>
+          <th>Count</th>
+          <th>Delay</th>
+          <th>Time</th>
+          <th>Replay</th>
+        </tr>
+		#set( $number = 1 )
+		#foreach ($call in $phoneCalls)
+        <tr>
+		  <td>$number</td>
+          <td>$call.getPhoneNumber()</td>
+          <td>$call.getCount()</td>
+          <td>$call.getDelay()</td>
+          <td>$call.getTime()</td>
+          <td>REPLAY</td>
+        </tr>
+		#set( $number = $number + 1 )
+		#end
+		</div>	  
   </body>
 </html>

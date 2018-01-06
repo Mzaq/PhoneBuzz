@@ -8,10 +8,7 @@ import obj.BasicPhoneCall;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Helper {
     public static Say fizzBuzz(int number){
@@ -46,15 +43,16 @@ public class Helper {
         return calls;
     }
 
-    public static void updateLog(Map<String, Object> model) throws FileNotFoundException {
-        int numLines = 1;
-        Scanner scanner = new Scanner(new File("src/main/resources/call_log.dat"));
-        while (scanner.hasNextLine() && numLines <= 5){
-            String nextCall = scanner.nextLine();
+    public static List<BasicPhoneCall> packageLog() throws FileNotFoundException {
+        List<BasicPhoneCall> phoneCalls = new ArrayList<>();
+        Scanner fileScanner = new Scanner(new File("src/main/resources/call_log.dat"));
+        while (fileScanner.hasNextLine()){
+            String nextCall = fileScanner.nextLine();
             List<String> callInfo = Arrays.asList(nextCall.split(","));
             BasicPhoneCall phoneCall = new BasicPhoneCall(callInfo.get(0), callInfo.get(1), callInfo.get(2), callInfo.get(3));
-            model.put("call" + numLines, phoneCall);
-            numLines++;
+            phoneCalls.add(phoneCall);
         }
+        Collections.reverse(phoneCalls);
+        return phoneCalls;
     }
 }
