@@ -37,6 +37,9 @@ public class Helper {
         Scanner fileScanner = new Scanner(new File(logFilePath));
         while (fileScanner.hasNextLine()){
             String nextCall = fileScanner.nextLine();
+            if (nextCall.equals("")){
+                continue;
+            }
             List<String> callInfo = Arrays.asList(nextCall.split(","));
             BasicPhoneCall phoneCall = new BasicPhoneCall(
                     callInfo.get(0),
