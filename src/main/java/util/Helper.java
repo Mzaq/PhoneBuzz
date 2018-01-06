@@ -5,8 +5,6 @@ import obj.BasicPhoneCall;
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Helper {
@@ -89,8 +87,15 @@ public class Helper {
     }
 
     private static String getFormattedCurrentDateAndTime(){
+        StringBuilder dateAndTime = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
-        return DateTimeFormatter.ISO_INSTANT.format(now.toInstant(ZoneOffset.UTC));
+        dateAndTime.append(now.getMonthValue()).append("/").
+                append(now.getDayOfMonth()).append("/").
+                append(now.getYear()).append(" @ ").
+                append(now.getHour()).append(":").
+                append(now.getMinute());
+
+        return dateAndTime.toString();
     }
 
     public static BasicPhoneCall getPhoneCall(String sid){
