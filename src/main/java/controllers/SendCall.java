@@ -63,8 +63,6 @@ public class SendCall {
     });
 
     private static void makeCall(String toNumber, int delay) throws URISyntaxException, IOException {
-        Twilio.init(Config.ACCOUNT_SID, Config.AUTH_TOKEN);
-
         Call call = Call.creator(
                 new PhoneNumber(toNumber),
                 new PhoneNumber(Config.TWILIO_NUMBER),
