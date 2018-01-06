@@ -89,11 +89,22 @@ public class Helper {
     private static String getFormattedCurrentDateAndTime(){
         StringBuilder dateAndTime = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
+
+        String hour = Integer.toString(now.getHour());
+        String minute = Integer.toString(now.getMinute());
+
+        if (hour.length() == 1){
+            hour = "0" + hour;
+        }
+        if (minute.length() == 1){
+            minute = "0" + minute;
+        }
+
         dateAndTime.append(now.getMonthValue()).append("/").
                 append(now.getDayOfMonth()).append("/").
                 append(now.getYear()).append(" @ ").
-                append(now.getHour()).append(":").
-                append(now.getMinute());
+                append(hour).append(":").
+                append(minute);
 
         return dateAndTime.toString();
     }
