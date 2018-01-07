@@ -29,7 +29,7 @@ public class SendCall {
             return inputNumber + " is not valid. Please go back and try again.";
         }
 
-        //Convert delay string to integer
+        //Convert delay string to integer. Will default to 0 with invalid input
         try {
             delay = Integer.parseInt(inputDelay);
         } catch (NumberFormatException e) {

@@ -93,7 +93,7 @@ public class Helper {
         output.close();
     }
 
-    //Creates readable current date and time
+    //Creates readable current date and time.
     private static String getFormattedCurrentDateAndTime(){
         StringBuilder dateAndTime = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
@@ -118,7 +118,7 @@ public class Helper {
         return dateAndTime.toString();
     }
 
-    //Get BasicPhoneCall by sid
+    //Get BasicPhoneCall by sid.
     public static BasicPhoneCall getPhoneCall(String sid){
         return loggedCalls.get(sid);
     }

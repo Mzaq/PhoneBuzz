@@ -11,7 +11,7 @@ import util.Helper;
 
 public class ReceiveCall {
 
-    //Input prompt
+    //Input prompt. Routes to /handle-number.
     public static Route call = (request, response) -> {
         Say sayMessage = new Say.Builder("Hello! Please enter a number for Fizz Buzz. Enter # when finished.").build();
         Gather input = new Gather.Builder().timeout(3).say(sayMessage).action("/handle-number").build();
@@ -20,7 +20,7 @@ public class ReceiveCall {
         return twiml.toXml();
         };
 
-    //Process fizzbuzz input and create message twiml
+    //Process fizzbuzz input and create message twiml.
     public static Route fizzBuzz = (request, response) -> {
         String digit = request.queryParams("Digits");
         String toNumber = request.queryParams("To");
@@ -45,7 +45,7 @@ public class ReceiveCall {
         return twiml.toXml();
     };
 
-    //Create replay message twiml
+    //Create replay message twiml.
     public static Route createReplay = ((request, response) -> {
         String sid = request.queryParams("CallSid");
         String digit = Helper.getPhoneCall(sid).getCount();

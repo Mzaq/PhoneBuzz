@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Website {
 
-    //Map model to view and map relevant data to display on webpage
+    //Map model to view and map relevant data to display on webpage.
     public static TemplateViewRoute init = ((request, response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("twilioNumber", Config.TWILIO_NUMBER);
