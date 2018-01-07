@@ -1,3 +1,7 @@
+/* POJO for holding necessary call information in
+* an organized way. Used to store any outgoing
+* call information and mimic replay calls.
+*/
 package obj;
 
 public class BasicPhoneCall {

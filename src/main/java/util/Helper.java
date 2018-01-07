@@ -1,3 +1,5 @@
+/* Contains useful methods used throughout the program */
+
 package util;
 
 import com.twilio.security.RequestValidator;
@@ -12,6 +14,7 @@ public class Helper {
     private static Map<String, BasicPhoneCall> loggedCalls = new HashMap<>();
     private static final String logFilePath = "src/main/resources/call_log.dat";
 
+    //Fizz buzz message creator.
     public static Say fizzBuzz(int number){
         StringBuilder message = new StringBuilder();
 
@@ -31,6 +34,7 @@ public class Helper {
         return new Say.Builder(message.toString()).build();
     }
 
+    //Parses phone calls and creates BasicPhoneCall's to store data.
     public static List<BasicPhoneCall> parseLog() throws FileNotFoundException {
         List<BasicPhoneCall> phoneCalls = new ArrayList<>();
         Scanner fileScanner = new Scanner(new File(logFilePath));
@@ -53,6 +57,7 @@ public class Helper {
         return phoneCalls;
     }
 
+    //Map new BasicPhoneCall to sid.
     public static void mapCall(String count, String delay, String phoneNumber, String sid){
         BasicPhoneCall phoneCall = new BasicPhoneCall(
                 getFormattedCurrentDateAndTime(),
@@ -64,6 +69,7 @@ public class Helper {
         loggedCalls.put(sid, phoneCall);
     }
 
+    //Map existing BasicPhoneCall to sid.
     public static void mapCall(BasicPhoneCall phoneCall){
         loggedCalls.put(phoneCall.getSid(), phoneCall);
     }
@@ -87,6 +93,7 @@ public class Helper {
         output.close();
     }
 
+    //Creates readable current date and time
     private static String getFormattedCurrentDateAndTime(){
         StringBuilder dateAndTime = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
@@ -101,6 +108,7 @@ public class Helper {
             minute = "0" + minute;
         }
 
+        //Creates "XX/XX/XX @ XX:XX" format (24 hours)
         dateAndTime.append(now.getMonthValue()).append("/").
                 append(now.getDayOfMonth()).append("/").
                 append(now.getYear()).append(" @ ").
@@ -119,11 +127,8 @@ public class Helper {
     public static boolean validateRequest(String sid, String caller, String digits, String from, String to) {
         // Initialize the validator
         RequestValidator validator = new RequestValidator(Config.AUTH_TOKEN);
-
-        // The Twilio request URL
         String url = Config.RECEIVE_CALL_URL;
 
-        // The post variables in Twilio's request
         Map<String, String> params = new HashMap<>();
         params.put("CallSid", sid);
         params.put("Caller", caller);

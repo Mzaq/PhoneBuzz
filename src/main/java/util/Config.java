@@ -1,3 +1,5 @@
+/*Holds sensitive data and important global variables */
+
 package util;
 
 public class Config {

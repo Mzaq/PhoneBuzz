@@ -1,3 +1,5 @@
+/*Controls the flow of any incoming calls*/
+
 package controllers;
 
 import com.twilio.twiml.voice.Gather;
@@ -9,6 +11,7 @@ import util.Helper;
 
 public class ReceiveCall {
 
+    //Input prompt
     public static Route call = (request, response) -> {
         Say sayMessage = new Say.Builder("Hello! Please enter a number for Fizz Buzz. Enter # when finished.").build();
         Gather input = new Gather.Builder().timeout(3).say(sayMessage).action("/handle-number").build();
@@ -17,12 +20,14 @@ public class ReceiveCall {
         return twiml.toXml();
         };
 
+    //Process fizzbuzz input and create message twiml
     public static Route fizzBuzz = (request, response) -> {
         String digit = request.queryParams("Digits");
         String toNumber = request.queryParams("To");
         String sid = request.queryParams("CallSid");
         VoiceResponse twiml;
 
+        //Check for valid fuzz buzz input
         try {
             int number = Integer.parseInt(digit);
             Say message = Helper.fizzBuzz(number);
@@ -40,6 +45,7 @@ public class ReceiveCall {
         return twiml.toXml();
     };
 
+    //Create replay message twiml
     public static Route createReplay = ((request, response) -> {
         String sid = request.queryParams("CallSid");
         String digit = Helper.getPhoneCall(sid).getCount();
