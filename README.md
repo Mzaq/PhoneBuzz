@@ -19,7 +19,7 @@ If you want to get the full functionality of PhoneBuzz, you will need to run it 
 
 ### Requirements
 
-You will need the [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html). The Gradle wrapper is included with the repository so Gradle installation is not necessary and furthermore, it will take care of installing the other dependencies.
+You will need the [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html). The Gradle wrapper is included with the repository so Gradle installation is not necessary and furthermore, it will take care of downloading the other dependencies.
 
 ### Steps
 
