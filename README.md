@@ -9,7 +9,8 @@ PhoneBuzz was created for a [LendUp](https://www.lendup.com/) coding challenge.
 Java, Twilio, Spark, Apache Velocity, Gradle, HTML, CSS.
 
 ## Test it out
-Try the app [here](http://138.197.26.93:4567). It is currently running on a [DigitalOcean](https://www.digitalocean.com/) droplet
+Try the app ~~[here](#). It is currently running on a [DigitalOcean](https://www.digitalocean.com/) droplet~~
+App not hosted anymore as of Jan 27, 2018.
 
 Note: You will only be able to call PhoneBuzz directly. Because my Twilio account is only a trial account, only numbers that I have whitelisted will be able to get called.
 
